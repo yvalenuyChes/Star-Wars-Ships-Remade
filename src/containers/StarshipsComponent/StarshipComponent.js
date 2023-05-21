@@ -2,11 +2,16 @@ import { Button, CircularProgress } from "@mui/material"
 import StarsipSelector from "../../components/StarshipSelector/StarshipSelector"
 
 import styles from './styles.module.scss'
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import axios from "axios"
 
 export default function StarshipComponent(){
 
+
+   const films = ['6','5', '4', '3', '2', '1']
+   const [currentFilm, setCurrentFilm] = useState('6')
    const [update, setUpdate] = useState(1)
+   const [title, setTitle] = useState(null)
 
    const compareHandler = () => {
       const firstSelector = localStorage.getItem('firstSelector')
@@ -90,7 +95,7 @@ export default function StarshipComponent(){
       localStorage.setItem('secondStarshipColorPassengers', 'green')
      }
 
-     if(firstStarship.cargo_capacity > secondStarship.cargo_capacity){
+     if(firstStarship.cargo_capacity < secondStarship.cargo_capacity){
       localStorage.setItem('firstStarshipColorCargoCapacity', 'green')
       localStorage.setItem('secondStarshipColorCargoCapacity', 'red')
      }else if(
@@ -123,10 +128,31 @@ export default function StarshipComponent(){
      setUpdate(Date.now())
    }
 
+   const chooseFilmHandler = (film) => {
+      setCurrentFilm(film) 
+      setUpdate(Date.now())
+   }
+
+   useEffect(()=> {
+      axios.get(`https://swapi.dev/api/films/${currentFilm}`)
+      .then(film => {
+         setTitle(film.data.title)
+      })
+   }, [update])
+
    return(
       <div className={styles.main_container}>
          <h1>Star wars spaceships </h1>
-          <h2>Second film</h2>
+         <p>Choose film:</p>
+         <div>
+
+            {
+              films.map((film, key)=> {
+               return<Button key={key} onClick={() => chooseFilmHandler(film)} >{film}</Button>
+              })
+            }
+         </div>
+          <h2>{title}</h2>
           {update
           ?
           <div className={styles.container} >
@@ -134,10 +160,14 @@ export default function StarshipComponent(){
           
 
          <StarsipSelector
+            filmNumber = {currentFilm}
             selectNumber={'firstSelector'}
+            update = {update}
          />
          <StarsipSelector
+            filmNumber = {currentFilm}
             selectNumber={'secondSelector'}
+            update = {update}
          />
           </div>
          : <CircularProgress/>

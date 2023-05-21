@@ -6,7 +6,7 @@ import styles from './styles.module.scss'
 import StarshipData from '../StarshipData/StarshipData'
 
 
-export default function StarsipSelector({selectNumber}){
+export default function StarsipSelector({selectNumber, filmNumber, update}){
 
 
    const [allStarships, setStarships] = useState([])
@@ -49,7 +49,7 @@ export default function StarsipSelector({selectNumber}){
 
       useEffect(() => {
          let starships = []
-         axios.get('https://swapi.dev/api/films/5/')
+         axios.get(`https://swapi.dev/api/films/${filmNumber}/`)
          
          .then(data => data.data.starships.map(link => {
             axios.get(link)
@@ -64,12 +64,12 @@ export default function StarsipSelector({selectNumber}){
          }))
    
          .catch(err => console.log(err))
-   }, [])
+   }, [update])
 
    return(
       <div className={styles.container} >
          {
-            allStarships.length > 8
+            allStarships.length > 0
             ?
             <>
               <FormControl>
