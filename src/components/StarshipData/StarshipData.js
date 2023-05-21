@@ -1,5 +1,3 @@
-
-import { CircularProgress } from '@mui/material'
 import styles from './styles.module.scss'
 
 export default function StarshipData({
@@ -13,7 +11,8 @@ export default function StarshipData({
    passengers,
    cargoCapacity,
    consumables,
-   starshipImage
+   starshipImage,
+   starshipDataNum
 }){
 
 
@@ -23,13 +22,63 @@ export default function StarshipData({
             <li>Name:  {name}</li>
             <li>Model:  {model}</li>
             <li>Manufacturer:  {manufacturer}</li>
-            <li>Cost in credits:  {costInCredits}</li>
-            <li>Length:  {length}</li>
-            <li>Max atmosphering speed: {maxAtmospheringSpeed}</li>
-            <li>Crew: {crew}</li>
-            <li>Passengers:  {passengers}</li>
-            <li>Cargo capacity:  {cargoCapacity}</li>
-            <li>Consumables:  {consumables}</li>
+
+            <li style={{
+               color: 
+               starshipDataNum === 'firstSelector' 
+                  ? localStorage.getItem('firstStarshipColorCredits')
+                  : localStorage.getItem('secondStarshipColorCredits')
+               }} >Cost in credits:  {costInCredits}</li>
+
+            <li
+             style={{
+               color: 
+               starshipDataNum === 'firstSelector' 
+                  ? localStorage.getItem('firstStarshipColorLength')
+                  : localStorage.getItem('secondStarshipColorLength')
+               }}
+            
+            >Length:  {length}</li>
+            <li
+             style={{
+               color: 
+               starshipDataNum === 'firstSelector' 
+                  ? localStorage.getItem('firstStarshipColorMAS')
+                  : localStorage.getItem('secondStarshipColorMAS')
+               }}
+            >Max atmosphering speed: {maxAtmospheringSpeed}</li>
+            <li
+             style={{
+               color: 
+               starshipDataNum === 'firstSelector' 
+                  ? localStorage.getItem('firstStarshipColorCrew')
+                  : localStorage.getItem('secondStarshipColorCrew')
+               }}
+            >Crew: {crew}</li>
+            <li
+             style={{
+               color: 
+               starshipDataNum === 'firstSelector' 
+                  ? localStorage.getItem('firstStarshipColorPassengers')
+                  : localStorage.getItem('secondStarshipColorPassengers')
+               }}
+            >Passengers:  {passengers}</li>
+            <li
+             style={{
+               color: 
+               starshipDataNum === 'firstSelector' 
+                  ? localStorage.getItem('firstStarshipColorCargoCapacity')
+                  : localStorage.getItem('secondStarshipColorCargoCapacity')
+               }}
+            >Cargo capacity:  {cargoCapacity}</li>
+            <li
+             style={{
+               color: 
+               starshipDataNum === 'firstSelector' 
+                  ? localStorage.getItem('firstStarshipColorConsumables')
+                  : localStorage.getItem('secondStarshipColorConsumables')
+               }}
+            >Consumables:  {consumables}</li>
         </ul>
         {
          starshipImage
@@ -37,7 +86,7 @@ export default function StarshipData({
          <div className={styles.starshipImage + ' ' + starshipImage}/>
          : 
          <div className={styles.starshipImage}>
-         <CircularProgress/>
+       
          </div>
         }
        
