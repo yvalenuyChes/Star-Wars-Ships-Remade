@@ -95,7 +95,7 @@ export default function StarshipComponent(){
       localStorage.setItem('secondStarshipColorPassengers', 'green')
      }
 
-     if(firstStarship.cargo_capacity < secondStarship.cargo_capacity){
+     if(firstStarship.cargo_capacity > secondStarship.cargo_capacity){
       localStorage.setItem('firstStarshipColorCargoCapacity', 'green')
       localStorage.setItem('secondStarshipColorCargoCapacity', 'red')
      }else if(
@@ -138,7 +138,7 @@ export default function StarshipComponent(){
       .then(film => {
          setTitle(film.data.title)
       })
-   }, [update])
+   }, [update,currentFilm ])
 
    return(
       <div className={styles.main_container}>
